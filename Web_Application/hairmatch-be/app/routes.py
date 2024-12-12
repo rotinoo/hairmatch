@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 import os
 from .models import load_models, predict_image
-from .utils import save_uploaded_file, clean_up_file
+from .utils import save_uploaded_file, clean_up_file, recomendation
 
 # Blueprint for organizing routes
 bp = Blueprint('api', __name__)
@@ -41,11 +41,30 @@ def detect_hair():
 @bp.route('/api/recommend', methods=['POST'])
 def recommend():
     data = request.json
-    if "tipe_wajah" not in data or "tipe_rambut" not in data:
+    
+    # Validate request body
+    if not data or "tipe_wajah" not in data or "tipe_rambut" not in data:
         return jsonify({"error": "Missing 'tipe_wajah' or 'tipe_rambut' in request"}), 400
 
-    recommendations = [
-        {"nama": "Afro", "gambar": "https://example.com/afro.jpg"},
-        {"nama": "Pompadour", "gambar": "https://example.com/pompadour.jpg"}
+    # Extract the input values
+    tipe_wajah = data["tipe_wajah"]
+    tipe_rambut = data["tipe_rambut"]
+
+    # Use the recomendation function to get recommendations
+    recommendations = recomendation(tipe_rambut, tipe_wajah)
+
+    # Check if recommendations are empty
+    if not recommendations:
+        return jsonify({"error": "No recommendations found for the given inputs"}), 404
+
+    # Prepare the response with directory URLs
+    response = [
+        {
+            "nama": rec["style"],  # Hairstyle name
+            "penjelasan": rec["explanation"]  # Hairstyle explanation
+        }
+        for rec in recommendations
     ]
-    return jsonify({"gaya_rambut": recommendations})
+
+    # Return the response as JSON
+    return jsonify({"gaya_rambut": response}), 200
