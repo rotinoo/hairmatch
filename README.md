@@ -9,8 +9,13 @@ Interactive Interface: Easy-to-use web interface for exploring results.
 Model API: Powered by a Flask server to provide model endpoints.
 
 ## Dataset that we use
-Hair type dataset
-[https://storage.googleapis.com/hairtype-dataset/](https://console.cloud.google.com/storage/browser/hairtype-dataset)
+Face type dataset :
+[https://storage.googleapis.com/dataset-hairmatch](https://console.cloud.google.com/storage/browser/dataset-hairmatch)
+or you could download with
+`gsutil -m cp -r gs://dataset-hairmatch`
+
+Hair type dataset :
+[https://storage.googleapis.com/hairtype-dataset](https://console.cloud.google.com/storage/browser/hairtype-dataset)
 or you could download with
 `gsutil -m cp -r gs://hairtype-dataset`
 
