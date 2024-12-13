@@ -1,4 +1,4 @@
-## HairMatch
+# HairMatch
 HairMatch is a machine learning-powered web application that helps users discover men's hairstyles that best suit their facial features and preferences. The project integrates machine learning, Python, and Jupyter Notebook for processing and analysis, delivering recommendations through an intuitive interface. This 
 
 ## Features
@@ -28,7 +28,43 @@ Ensure you have:
 - A GCP account and a project set up.
 - The Google Cloud SDK (gcloud) installed and configured.
 
-### Machine Learning : 
+#### Clone directory
+```bash
+   git clone https://github.com/rotinoo/hairmatch.git
+```
 
+### Deployment :
+We are deploying backend in cloud run and front end in app enginge
 
-### Cloud Computing :
+#### Backend :
+Make sure you already clone the directory then
+
+1. Navigate to the backend directory :
+```bash
+cd hairmatch/Web_Application/hairmatch-be
+```
+2. Build the Docker image:
+```bash
+docker build -t hairmatch-backend .
+```
+3. Deploy the Docker container to Cloud Run:
+```
+gcloud run deploy --image gcr.io/[YOUR_PROJECT_ID]/hairmatch-backend --platform managed
+```
+
+Once deployed, note the provided Cloud Run URL.
+You can now proceed to configure and access the application through the deployed endpoints.
+to learnmore about the api go to README.md in the backend directory
+
+#### Frontend :
+1. Navigate to the frontend directory :
+```bash
+cd hairmatch/Web_Application/hairmatch-fe
+```
+2. Use any of code editor to edit utils/api_clint.py Change the base_url variable to yours backend url
+   ![image](https://github.com/user-attachments/assets/4235a547-4d74-43d3-bcd8-a9765be54d78)
+3. Make sure your app engine in the gcp is already setup and then deploy it
+```
+gcloud app deploy
+```
+Once deployed, you can access the application through the provided App Engine URL.
